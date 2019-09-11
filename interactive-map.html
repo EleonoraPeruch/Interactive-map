@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/proj4.js"></script>
+        <script src="js/proj4leaflet.js"></script>
+        <script src="data/REGION_FVG_Area_2.js"></script>
+        <script src="data/REGION_FVG_Perimeter_3.js"></script>
+        <script src="data/PROVINCES_FVG_4.js"></script>
+        <script src="data/MUNICIPALITIES_FVG_5.js"></script>
+        <script src="data/MUNICIPALITIES_FVG_and_bonfire_6.js"></script>
+        <script>
+        var highlightLayer;
+        function highlightFeature(e) {
+            highlightLayer = e.target;
+            highlightLayer.openPopup();
+        }
+        var crs = new L.Proj.CRS('EPSG:6708', '+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs', {
+            resolutions: [2800, 1400, 700, 350, 175, 84, 42, 21, 11.2, 5.6, 2.8, 1.4, 0.7, 0.35, 0.14, 0.07],
+        });
+        var map = L.map('map', {
+            crs: crs,
+            continuousWorld: false,
+            worldCopyJump: false, 
+            zoomControl:true, maxZoom:28, minZoom:1
+        })
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="http://leafletjs.com" title="A JS library for interactive maps">Leaflet</a>');
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+            if (bounds_group.getLayers().length) {
+                map.fitBounds(bounds_group.getBounds());
+            }
+        }
+        var img_FVG_Natural_Color_Map_0 = 'data/FVG_Natural_Color_Map_0.png';
+        var img_bounds_FVG_Natural_Color_Map_0 = [[45.528958199863325,11.25961545452003],[46.950438469144416,13.919628263023318]];
+        var layer_FVG_Natural_Color_Map_0 = new L.imageOverlay(img_FVG_Natural_Color_Map_0, img_bounds_FVG_Natural_Color_Map_0);
+        bounds_group.addLayer(layer_FVG_Natural_Color_Map_0);
+        var layer_OpenStreetMap_1 = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            opacity: 1.0,
+            attribution: '',
+        });
+        layer_OpenStreetMap_1;
+        map.addLayer(layer_OpenStreetMap_1);
+        function pop_REGION_FVG_Area_2(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NOME'] !== null ? Autolinker.link(String(feature.properties['NOME'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_REGION_FVG_Area_2_0() {
+            return {
+                pane: 'pane_REGION_FVG_Area_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(31,120,180,1.0)',
+            }
+        }
+        map.createPane('pane_REGION_FVG_Area_2');
+        map.getPane('pane_REGION_FVG_Area_2').style.zIndex = 402;
+        map.getPane('pane_REGION_FVG_Area_2').style['mix-blend-mode'] = 'normal';
+        var layer_REGION_FVG_Area_2 = new L.geoJson(json_REGION_FVG_Area_2, {
+            attribution: '',
+            pane: 'pane_REGION_FVG_Area_2',
+            onEachFeature: pop_REGION_FVG_Area_2,
+            style: style_REGION_FVG_Area_2_0,
+        });
+        bounds_group.addLayer(layer_REGION_FVG_Area_2);
+        function pop_REGION_FVG_Perimeter_3(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+        }
+
+        function style_REGION_FVG_Perimeter_3_0() {
+            return {
+                pane: 'pane_REGION_FVG_Perimeter_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 3.0,
+                fillOpacity: 0,
+            }
+        }
+        map.createPane('pane_REGION_FVG_Perimeter_3');
+        map.getPane('pane_REGION_FVG_Perimeter_3').style.zIndex = 403;
+        map.getPane('pane_REGION_FVG_Perimeter_3').style['mix-blend-mode'] = 'normal';
+        var layer_REGION_FVG_Perimeter_3 = new L.geoJson(json_REGION_FVG_Perimeter_3, {
+            attribution: '',
+            pane: 'pane_REGION_FVG_Perimeter_3',
+            onEachFeature: pop_REGION_FVG_Perimeter_3,
+            style: style_REGION_FVG_Perimeter_3_0,
+        });
+        bounds_group.addLayer(layer_REGION_FVG_Perimeter_3);
+        map.addLayer(layer_REGION_FVG_Perimeter_3);
+        function pop_PROVINCES_FVG_4(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NOME'] !== null ? Autolinker.link(String(feature.properties['NOME'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_PROVINCES_FVG_4_0() {
+            return {
+                pane: 'pane_PROVINCES_FVG_4',
+                opacity: 1,
+                color: 'rgba(228,26,28,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 4.0,
+                fillOpacity: 0,
+            }
+        }
+        map.createPane('pane_PROVINCES_FVG_4');
+        map.getPane('pane_PROVINCES_FVG_4').style.zIndex = 404;
+        map.getPane('pane_PROVINCES_FVG_4').style['mix-blend-mode'] = 'normal';
+        var layer_PROVINCES_FVG_4 = new L.geoJson(json_PROVINCES_FVG_4, {
+            attribution: '',
+            pane: 'pane_PROVINCES_FVG_4',
+            onEachFeature: pop_PROVINCES_FVG_4,
+            style: style_PROVINCES_FVG_4_0,
+        });
+        bounds_group.addLayer(layer_PROVINCES_FVG_4);
+        function pop_MUNICIPALITIES_FVG_5(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NOME'] !== null ? Autolinker.link(String(feature.properties['NOME'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_MUNICIPALITIES_FVG_5_0() {
+            return {
+                pane: 'pane_MUNICIPALITIES_FVG_5',
+                opacity: 1,
+                color: 'rgba(227,26,28,1.0)',
+                dashArray: '10,5',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(253,191,111,0.4470588235294118)',
+            }
+        }
+        map.createPane('pane_MUNICIPALITIES_FVG_5');
+        map.getPane('pane_MUNICIPALITIES_FVG_5').style.zIndex = 405;
+        map.getPane('pane_MUNICIPALITIES_FVG_5').style['mix-blend-mode'] = 'normal';
+        var layer_MUNICIPALITIES_FVG_5 = new L.geoJson(json_MUNICIPALITIES_FVG_5, {
+            attribution: '',
+            pane: 'pane_MUNICIPALITIES_FVG_5',
+            onEachFeature: pop_MUNICIPALITIES_FVG_5,
+            style: style_MUNICIPALITIES_FVG_5_0,
+        });
+        bounds_group.addLayer(layer_MUNICIPALITIES_FVG_5);
+        function pop_MUNICIPALITIES_FVG_and_bonfire_6(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['BONFIRE'] !== null ? Autolinker.link(String(feature.properties['BONFIRE'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['IMAGE'] !== null ? Autolinker.link(String(feature.properties['IMAGE'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+        function style_MUNICIPALITIES_FVG_and_bonfire_6_0(feature) {
+            var context = {
+                feature: feature,
+                variables: {}
+            };
+            // Start of if blocks and style check logic
+            if (MUNICIPALITIES_FVG_and_bonfire_6rule0_eval_expression(context)) {
+                  return {
+                pane: 'pane_MUNICIPALITIES_FVG_and_bonfire_6',
+                opacity: 1,
+                color: 'rgba(227,26,28,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(253,191,111,1.0)',
+            };
+                }
+            else {
+                return {fill: false, stroke: false};
+            }
+        }
+        map.createPane('pane_MUNICIPALITIES_FVG_and_bonfire_6');
+        map.getPane('pane_MUNICIPALITIES_FVG_and_bonfire_6').style.zIndex = 406;
+        map.getPane('pane_MUNICIPALITIES_FVG_and_bonfire_6').style['mix-blend-mode'] = 'normal';
+        var layer_MUNICIPALITIES_FVG_and_bonfire_6 = new L.geoJson(json_MUNICIPALITIES_FVG_and_bonfire_6, {
+            attribution: '',
+            pane: 'pane_MUNICIPALITIES_FVG_and_bonfire_6',
+            onEachFeature: pop_MUNICIPALITIES_FVG_and_bonfire_6,
+            style: style_MUNICIPALITIES_FVG_and_bonfire_6_0,
+        });
+        bounds_group.addLayer(layer_MUNICIPALITIES_FVG_and_bonfire_6);
+        map.on("zoomend", function(e) {
+            if (map.getZoom() <= 19 && map.getZoom() >= 19) {
+                map.addLayer(layer_OpenStreetMap_1);
+            } else if (map.getZoom() > 19 || map.getZoom() < 19) {
+                map.removeLayer(layer_OpenStreetMap_1);
+            }
+            if (map.getZoom() <= 19 && map.getZoom() >= 8) {
+                map.addLayer(layer_MUNICIPALITIES_FVG_5);
+            } else if (map.getZoom() > 19 || map.getZoom() < 8) {
+                map.removeLayer(layer_MUNICIPALITIES_FVG_5);
+            }
+        });
+            if (map.getZoom() <= 19 && map.getZoom() >= 19) {
+                map.addLayer(layer_OpenStreetMap_1);
+            } else if (map.getZoom() > 19 || map.getZoom() < 19) {
+                map.removeLayer(layer_OpenStreetMap_1);
+            }
+            if (map.getZoom() <= 19 && map.getZoom() >= 8) {
+                map.addLayer(layer_MUNICIPALITIES_FVG_5);
+            } else if (map.getZoom() > 19 || map.getZoom() < 8) {
+                map.removeLayer(layer_MUNICIPALITIES_FVG_5);
+            }
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'MUNICIPALITIES_FVG_and_bonfire<br /><table><tr><td style="text-align: center;"><img src="legend/MUNICIPALITIES_FVG_and_bonfire_6_0.png" /></td><td></td></tr></table>': layer_MUNICIPALITIES_FVG_and_bonfire_6,'<img src="legend/MUNICIPALITIES_FVG_5.png" /> MUNICIPALITIES_FVG': layer_MUNICIPALITIES_FVG_5,'<img src="legend/PROVINCES_FVG_4.png" /> PROVINCES_FVG': layer_PROVINCES_FVG_4,'<img src="legend/REGION_FVG_Perimeter_3.png" /> REGION_FVG_Perimeter': layer_REGION_FVG_Perimeter_3,'<img src="legend/REGION_FVG_Area_2.png" /> REGION_FVG_Area': layer_REGION_FVG_Area_2,"OpenStreetMap": layer_OpenStreetMap_1,"FVG_Natural_Color_Map": layer_FVG_Natural_Color_Map_0,},{collapsed:false}).addTo(map);L.control.scale({position: 'bottomleft', maxWidth: 100, metric: true, imperial: false, updateWhenIdle: false}).addTo(map);
+        map.on("zoomend", function(){
+
+                if (map.hasLayer(layer_MUNICIPALITIES_FVG_5)) {
+                    if (map.getZoom() <= 19 && map.getZoom() >= 19) {
+                        layer_MUNICIPALITIES_FVG_5.eachLayer(function (layer) {
+                            layer.openTooltip();
+                        });
+                    } else {
+                        layer_MUNICIPALITIES_FVG_5.eachLayer(function (layer) {
+                            layer.closeTooltip();
+                        });
+                    }
+                }
+        });
+        setBounds();
+        var i = 0;
+        layer_MUNICIPALITIES_FVG_5.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['NOME'] !== null?String('<div style="color: #000000; font-size: 8pt; font-family: \'Calibri\', sans-serif;">' + layer.feature.properties['NOME']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_MUNICIPALITIES_FVG_5'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+                if (map.hasLayer(layer_MUNICIPALITIES_FVG_5)) {
+                    if (map.getZoom() <= 19 && map.getZoom() >= 19) {
+                        layer_MUNICIPALITIES_FVG_5.eachLayer(function (layer) {
+                            layer.openTooltip();
+                        });
+                    } else {
+                        layer_MUNICIPALITIES_FVG_5.eachLayer(function (layer) {
+                            layer.closeTooltip();
+                        });
+                    }
+                }
+        L.ImageOverlay.include({
+            getBounds: function () {
+                return this._bounds;
+            }
+        });
+        resetLabels([layer_PROVINCESFVG_4,layer_MUNICIPALITIESFVG_5]);
+        map.on("zoomend", function(){
+            resetLabels([layer_PROVINCESFVG_4,layer_MUNICIPALITIESFVG_5]);
+        });
+        map.on("layeradd", function(){
+            resetLabels([layer_PROVINCESFVG_4,layer_MUNICIPALITIESFVG_5]);
+        });
+        map.on("layerremove", function(){
+            resetLabels([layer_PROVINCESFVG_4,layer_MUNICIPALITIESFVG_5]);
+        });
+        </script>
+    </body>
+</html>
