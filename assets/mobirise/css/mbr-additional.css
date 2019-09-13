@@ -551,7 +551,7 @@ a.text-black:focus {
 }
 
 .mbr-section-btn .modal-body {
-  z-index: 1;
+  z-index: 1 !important;
 }
 
 .mbr-gallery-filter li a {
