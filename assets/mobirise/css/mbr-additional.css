@@ -550,10 +550,6 @@ a.text-black:focus {
   -webkit-box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.2) !important;
 }
 
-.mbr-section-btn .modal-body {
-  z-index: 1 !important;
-}
-
 .mbr-gallery-filter li a {
   border-radius: 100px !important;
 }
